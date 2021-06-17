@@ -1,26 +1,7 @@
 import { useState } from 'react';
 import NextLink from 'next/link';
 import { RiAddLine, RiPencilLine, RiRefreshLine } from 'react-icons/ri';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  Heading,
-  Icon,
-  Link,
-  Spinner,
-  Stack,
-  Table,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-  useBreakpointValue,
-} from '@chakra-ui/react';
-
+import { Box, Button, Checkbox, Flex, Heading, Icon, Link, Spinner, Stack, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue } from '@chakra-ui/react';
 import { api } from '../../services/api';
 import { useUsers } from '../../services/hooks/useUsers';
 import { queryClient } from '../../services/queryClient';
@@ -38,13 +19,10 @@ export default function UsersList() {
   });
 
   async function handlePrefetchUser(userId: string) {
-    console.log(userId);
     await queryClient.prefetchQuery(
       ['user', { userId }],
       async () => {
         const response = await api.get(`users/${userId}`);
-
-        console.log(response.data);
         return response.data;
       },
       { staleTime: TEN_MINUTES_IN_MILLISECONDS },
@@ -54,16 +32,8 @@ export default function UsersList() {
   return (
     <Box>
       <Header />
-
-      <Flex
-        width="100%"
-        marginY="6"
-        maxWidth={1480}
-        marginX="auto"
-        paddingX="6"
-      >
+      <Flex width="100%" marginY="6" maxWidth={1480} marginX="auto" paddingX="6">
         <Sidebar />
-
         <Box flex="1" borderRadius={8} bg="gray.800" padding="8">
           <Flex marginBottom="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
@@ -72,7 +42,6 @@ export default function UsersList() {
                 <Spinner size="sm" color="gray.500" marginLeft="4" />
               )}
             </Heading>
-
             <Stack direction="row" spacing="3">
               <Button
                 size="sm"
@@ -80,25 +49,21 @@ export default function UsersList() {
                 colorScheme="blue"
                 leftIcon={<Icon as={RiRefreshLine} fontSize="20" />}
                 onClick={() => refetch()}
-                disabled={isLoading || isFetching}
-              >
+                disabled={isLoading || isFetching}>
                 Atualizar
               </Button>
-
               <NextLink href="/users/create" passHref>
                 <Button
                   as="a"
                   size="sm"
                   fontSize="sm"
                   colorScheme="pink"
-                  leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-                >
+                  leftIcon={<Icon as={RiAddLine} fontSize="20" />}>
                   Criar novo usuário
                 </Button>
               </NextLink>
             </Stack>
           </Flex>
-
           {isLoading ? (
             <Flex justify="center">
               <Spinner />
@@ -128,10 +93,7 @@ export default function UsersList() {
                       </Td>
                       <Td>
                         <Box>
-                          <Link
-                            color="purple.400"
-                            onMouseEnter={() => handlePrefetchUser(user.id)}
-                          >
+                          <Link color="purple.400" onMouseEnter={() => handlePrefetchUser(user.id)}>
                             <Text fontWeight="bold">{user.name}</Text>
                           </Link>
                           <Text fontSize="sm" color="gray.300">
